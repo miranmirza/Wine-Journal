@@ -59,7 +59,7 @@ create table if not exists starred(
 
 begin transaction;
 
-insert into consumers(firstName, lastName, dateOfBirth, address, phoneNum) values ("Miran", "Mirza", '19940628', "1375 Prince of Wales Dr", "6131234567");
+insert into consumers(firstName, lastName, dateOfBirth, address, phoneNum) values ("Jon", "Doe", '19921331', "1234 Main St", "6131234567");
 insert into winery(wineryID, wineryName, yearFounded, location) values (1, "Villa Maria Estates", 1961, "New Zealand");
 insert into wines(wineName, type, year, alcoholContent, country, wineryID, style, varterial, rating) values("Villa Maria Private Bin Rose", "Rosé", 2010, 13, "New Zealand", 1, "Medium-bodied and Dry", "Rose Wines", 0);
 insert into wines(wineName, type, year, alcoholContent, country, wineryID, style, varterial, rating) values("Villa Maria Cellar Selection Sauvignon Blanc 2014", "White Wine", 2014, 13, "New Zealand", 1, "Unavailable", "Sauvignon Blanc", 0);
