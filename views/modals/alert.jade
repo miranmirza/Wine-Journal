@@ -1,0 +1,67 @@
+div(class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")
+  div(class="modal-dialog")
+    div(class="modal-content")
+      div(class="modal-header")
+        button(type="button" class="close" data-dismiss="modal" aria-label="Close")
+          span(aria-hidden="true") &times;
+        h4(class="modal-title" id="myModalLabel") My Modal
+      div(class="modal-body" id="orderDetails")
+        
+        form(action="/updateEntry", method="post")
+          fieldset
+            input#wineID(name="wineID" type="hidden")
+            input#wineryID(name="wineryID" type="hidden")
+            div.control-group
+              label.control-label(for="wineName") Name: 
+              div.controls
+                input#wineName(type="text" name="wineName")
+                  
+            div.control-group
+              label.control-label(for="wineType") Type:  
+              div.controls
+                select#wineType(name="wineType")
+                  option(value="White Wine") White
+                  option(value="Red Wine") Red
+                  option(value="Sparkling Wine") Sparkling
+                  option(value="Rosé") Rosé
+                  option(value="Ice Wine") Icewine
+                  option(value="Fortified Wine") Fortified
+                  option(value="Dessert Wine") Dessert
+                  
+
+            div.control-group
+              label.control-label(for="wineYear") Year: 
+              div.controls
+                input#wineYear(type="number" min="1800" name="wineYear")
+                                
+            div.control-group
+              label.control-label(for="alcoholContent") Alcohol Content: 
+              div.controls
+                input#alcoholContent(type="number" min="0" max="100" name="alcoholContent")
+                span %
+                
+            div.control-group
+              label.control-label(for="wineCOO") Country of Origin: 
+              div.controls
+                input#wineCOO(type="text" name="wineCOO")          
+
+            div.control-group
+              label.control-label(for="wineStyle") Style: 
+              div.controls
+                input#wineStyle(type="text" name="wineStyle")
+                  
+            div.control-group
+              label.control-label(for="wineVarterial") Varterial: 
+              div.controls
+                input#wineVarterial(type="text" name="wineVarterial")
+                  
+            div.control-group
+             label.control-label(for="wineRating") Rating: 
+              div.controls
+                input#wineRating(name="wineRating" type="number" class="rating" min="0" max="5" step="0.5" data-size="xs")
+
+          div(class="modal-footer")
+            //button(type="button" class="btn btn-default" data-dismiss="modal") Close
+            button(type="button" class="btn btn-default" id="favouriteButton") Favourite
+            button(type="button" class="btn btn-danger" id="deleteButton") Delete
+            button(type="submit" class="btn btn-primary") Save changes

@@ -1,0 +1,29 @@
+div(class="modal fade" id="wineryModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")
+  div(class="modal-dialog")
+    div(class="modal-content")
+      div(class="modal-header")
+        button(type="button" class="close" data-dismiss="modal" aria-label="Close")
+          span(aria-hidden="true") &times;
+        h4#myModalLabel(class="modal-title") Winery Details
+      div(class="modal-body" id="orderDetails")        
+        form(action="/updateWineryEntry", method="post")
+          fieldset
+            input#wineryNum(name="wineryID" type="hidden")
+            div.control-group
+              label.control-label(for="wineryName") Name: 
+              div.controls
+                input#wineryName(type="text" name="wineryName")
+
+            div.control-group
+              label.control-label(for="wineryYear") Year Founded: 
+              div.controls
+                input#wineryYear(type="number" min="1800" name="wineryYear")                      
+                
+            div.control-group
+              label.control-label(for="wineryLocation") Location: 
+              div.controls
+                input#wineryLocation(type="text" name="wineryLocation")          
+
+          div(class="modal-footer")
+            //button(type="button" class="btn btn-danger" id="deleteButton") Delete
+            button(type="submit" class="btn btn-primary") Save changes

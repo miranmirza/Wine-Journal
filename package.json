@@ -1,0 +1,13 @@
+{
+  "name": "2406SQLiteTest",
+  "version": "0.0.1",
+  "description": "test connection to sqlite",
+  "main": "01_db_sqlite_access.js",
+  "scripts": {
+    "test": "start"
+  },
+  "author": "Miran Mirza",
+  "dependencies": {
+    "sqlite3": "^3.0.2"
+  }
+}

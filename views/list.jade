@@ -1,0 +1,71 @@
+extends layout
+    
+block header
+  script(src='/javascripts/adventure.js')
+
+
+block content     
+    include modals/alert    
+    include modals/winery
+    if message
+      div(class="alert alert-success alert-dismissible" role="alert") #{message}
+        button(type="button" class="close" data-dismiss="alert" aria-label="Close")
+          span(aria-hidden="true") &times;   
+        
+    nav(class="navbar navbar-default")
+      div(class="container-fluid")
+        div(class="navbar-header")
+          a(class="navbar-brand" href="#") #{title}
+
+          ul(class="nav navbar-nav")
+            li
+              button(href="/" class="btn btn-default navbar-btn") Home
+              
+            li
+              form(method="post" action="/getFavourites")
+                button(type="submit" class="btn btn-default navbar-btn") Favourites 
+              //span(class="sr-only")(current)
+
+          div(id="searchbar")
+            form(class="navbar-form navbar-left" role="search" method="post", action="/search")
+              div(class="input-group")
+                input#query(type="text" name="input" class="form-control" value=result)
+                span(class="input-group-btn")
+                  button(class="btn btn-default" type="submit") 
+                    span(class="glyphicon glyphicon-search")
+
+    input#userID(type="hidden")=user                 
+    div   
+      div
+      table(class="table table-striped")
+        thead
+          th Name
+          th Type
+          th Year
+          th Alcohol Content
+          th Winery
+          th Country
+          th Style
+          th Varterial
+          th Rating
+          //th Starred
+        tbody
+          - for (var item in items)
+            tr
+              td
+                a(data-toggle="modal" data-target="#myModal" id="#myButton" data-id= items[item].id) #{items[item].wineName}
+              td= items[item].type
+              td= items[item].year
+              td= items[item].alcoholContent + "%"
+              td
+                a(data-toggle="modal" data-target="#wineryModal" id="#myButton2" data-id= items[item].wineryID) #{items[item].wineryName}
+              td= items[item].country
+              td= items[item].style
+              td= items[item].varterial
+              td= items[item].rating
+              //td 
+                //button(id="#starButton" class="btn btn-primary btn-mini" data-id=items[item].id) Star
+
+      
+
+      

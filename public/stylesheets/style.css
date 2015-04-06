@@ -1,0 +1,17 @@
+#searchbar {
+	float: right;
+	max-width: 20%;
+	margin-right: 10px;
+}
+
+.container {
+  position: relative;
+}
+
+.jumbotron {
+  position: absolute;
+  border-radius: 15px;
+  top: 50%;
+  left:50%;
+  transform: translate(-50%,-50%);
+}
