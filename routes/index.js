@@ -11,11 +11,11 @@ router.get('/', function(req, res) {
 });
 
 router.get('/logout', function(req, res) {
-    req.session.destroy(function(err){
+    req.session.destroy(function(err) {
         if (err) {
             console.log("Error: %s", err);
         }
-        res.redirect("/");
+        res.redirect('/');
     });
 });
 
@@ -100,7 +100,7 @@ router.post('/deleteEntry', function(req, res) {
 
 });
 
-router.post('/updateEntry', function(req, res) {
+router.post('/updateWine', function(req, res) {
 	var db = new sqlite3.Database('data/3005DB');
 
 	var queryString = "UPDATE wines SET wineName= ?, type= ?, year= ?, alcoholContent= ?, country= ?, wineryID= ?, style= ?, varterial= ?, rating =? WHERE id=?;"

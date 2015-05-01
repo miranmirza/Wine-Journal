@@ -1,14 +1,31 @@
 {
-  "name": "2406SQLiteTest",
-  "version": "0.0.1",
-  "description": "test connection to sqlite",
-  "main": "01_db_sqlite_access.js",
+  "name": "WineJournal",
+  "version": "0.1.0",
+  "description": "A wine journal web application written in Node.js and SQLite",
+  "main": "app.js",
   "scripts": {
     "test": "start"
   },
   "author": "Miran Mirza",
   "dependencies": {
-    "query-string": "^1.0.0",
-    "sqlite3": "^3.0.2"
-  }
+    "sqlite3": "^3.0.2",
+    "morgan": "*",
+    "body-parser": "*",
+    "connect": "*",
+    "connect-sqlite3": "*",
+    "cookie-parser": "*",
+    "express": "4.12.3",
+    "express-session": "*",
+    "jade": "*",
+    "logic-query-parser": "*"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-develop": "~0.2.2",
+    "grunt-contrib-watch": "~0.5.3",
+    "request": "~2.27.0",
+    "time-grunt": "~0.1.1",
+    "load-grunt-tasks": "~0.2.0",
+    "grunt-bower-install": "~1.4.0"
+  }  
 }
