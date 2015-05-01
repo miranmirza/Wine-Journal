@@ -2,7 +2,7 @@ $(document).ready(function() {
 	$('#myModal').on('show.bs.modal', function(dbEntry) {
 	    var getID = $(event.target).data('id');
 		
-		$.post("/getDataFromID", {id: getID}, function(res) {
+		$.get("/wineFromID", {id: getID}, function(res) {
 			$('#myModalLabel').html(res.wineName);
 			$('#wineName').val(res.wineName);
 			$('#wineType').val(res.type);
@@ -34,8 +34,8 @@ $(document).ready(function() {
 	$('#wineryModal').on('show.bs.modal', function(dbEntry) {
 	    var getID = $(event.target).data('id');
 	    //make your ajax call populate items or what even you need
-		$.post("/getWineryDataFromID", {id: getID}, function(res) {
-			$('.modal-title').html(res.wineryName);
+		$.get("/wineryFromID", {id: getID}, function(res) {
+			$('.modal-title').html(res.wineName);
 			$('#wineryNum').val(res.wineryID);
 			$('#wineryName').val(res.wineryName);
 			$('#wineryYear').val(res.yearFounded);

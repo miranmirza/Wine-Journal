@@ -7,14 +7,14 @@ block header
 block content  
   body(background="/images/bg.jpg") 
   
-  div(class="jumbotron")  
-    div(class="container")                
+  div.jumbotron
+    div.container                
       h1= title
       p By Miran Mirza
       BR
-      div(class="col-lg")
+      div.col-lg
         form(method="post", action="/login")
-          div(class="input-group")
-            input#query(type="text" name="input" class="form-control" placeholder="Enter your full name here")
-            span(class="input-group-btn")
-              button(class="btn btn-default" type="submit") Login
+          div.input-group
+            input.form-control#query(type="text" name = "input" placeholder = "Enter your full name here")
+            span.input-group-btn
+              button.btn.btn-default(type="submit") Login

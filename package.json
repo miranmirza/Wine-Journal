@@ -8,6 +8,7 @@
   },
   "author": "Miran Mirza",
   "dependencies": {
+    "query-string": "^1.0.0",
     "sqlite3": "^3.0.2"
   }
 }

@@ -1,30 +1,39 @@
 var express = require('express');
 var router = express.Router();
-var sqlite3 = require('sqlite3').verbose()
+var sqlite3 = require('sqlite3').verbose();
 var parser = require('logic-query-parser');
 
-
 router.get('/', function(req, res) {
-	res.render('index', { title: 'Wine Journal'});
+	if(req.session.user)
+		res.redirect('/search?input=');
+	else
+		res.render('index', { title: 'Wine Journal'});
+});
+
+router.get('/logout', function(req, res) {
+    req.session.destroy(function(err){
+        if (err) {
+            console.log("Error: %s", err);
+        }
+        res.redirect("/");
+    }); 		
 });
 
 router.post('/login', function(req, res) {
-
 	var db = new sqlite3.Database('data/3005DB');
 	var sql = "SELECT * FROM consumers WHERE firstName like ? AND lastName like ?;"
 	var statement = db.prepare(sql);
-	
+	var userId = 0;
 	statement.get(req.body.input.split(" ", 2), function(err, row) {
-		req.session.user = row;
-		//console.log(req.session.user.firstName);
+		req.session.user = row.id;
 		statement.finalize();
 		db.close();
 	});
-	res.render('list', {title: 'Wine Listing', result: ""});
+	res.redirect('/search?input=');
 });
 
 
-router.post('/search', function(req, res) {
+router.get('/search', function(req, res) {
 	var db = new sqlite3.Database('data/3005DB');
 	var sql = "SELECT * FROM wines NATURAL JOIN winery WHERE wineName like ? or type like ?;"// or id like ? or bookcode like ?;";
 	var options = [];
@@ -40,25 +49,25 @@ router.post('/search', function(req, res) {
 	else {*/
 			//}
 	for(var i = 0; i < 2; ++i) {
-		options.push("%" + req.body.input + "%");			
+		options.push("%" + req.query.input + "%");			
 	}
 
 	var statement = db.prepare(sql);
 	statement.all(options, function(err, row) {
       	 res.render('list', { 
-      		 title: 'Wine Listing', result: req.body.input, items: row});
+      		 title: 'Wine Listing', result: req.query.input, items: row});
 		statement.finalize();
 		db.close();
 	});
 });
 
 
-router.post('/getDataFromID', function(req, res) {
+router.get('/wineFromID', function(req, res) {
 	var db = new sqlite3.Database('data/3005DB');
 	var sql = "SELECT * FROM wines WHERE id = ?;";
-	
+
 	var statement = db.prepare(sql);
-	statement.get(req.body.id, function(err, row) {
+	statement.get(req.query.id, function(err, row) {
 		res.send(row);
 		statement.finalize();
 		db.close();
@@ -66,12 +75,12 @@ router.post('/getDataFromID', function(req, res) {
 });
 
 
-router.post('/getWineryDataFromID', function(req, res) {
+router.get('/wineryFromID', function(req, res) {
 	var db = new sqlite3.Database('data/3005DB');
 	var sql = "SELECT * FROM winery WHERE wineryID = ?;";
-	
+
 	var statement = db.prepare(sql);
-	statement.get(req.body.id, function(err, row) {
+	statement.get(req.query.id, function(err, row) {
 		res.send(row);
 		statement.finalize();
 		db.close();
@@ -124,14 +133,14 @@ router.post('/updateWineryEntry', function(req, res) {
 	});
 });
 
-router.post('/getFavourites', function(req, res) {
+router.get('/favourites', function(req, res) {
 	var db = new sqlite3.Database('data/3005DB');
 	var queryString = "SELECT * from consumers JOIN starred ON consumers.id = starred.consumerID JOIN wines on starred.wineID=wines.id NATURAL JOIN winery WHERE starred=1 and consumerID=?;"
 	var statement = db.prepare(queryString);
 
-	statement.all(1, function(err, row) {
+	statement.all(req.session.user, function(err, row) {
       	 res.render('list', { 
-      		 title: 'Wine Listing', result: req.body.input, items: row});
+      		 title: 'Wine Listing', result: req.query.input, items: row});
 		statement.finalize();
 		db.close();
 	});	
@@ -143,7 +152,7 @@ router.post('/starWine', function(req, res) {
 	var queryString = "INSERT OR IGNORE INTO starred (consumerID, wineID, starred) VALUES (?, ?, COALESCE((SELECT starred FROM starred WHERE consumerID = ? AND wineID = ?), 0));"
 
 	var statement = db.prepare(queryString);
-	statement.run([req.body.user, req.body.data, req.body.user, req.body.data], function() {
+	statement.run([req.session.user, req.body.data, req.session.user, req.body.data], function() {
 		queryString = "UPDATE starred SET starred = CASE starred WHEN 1 THEN 0 ELSE 1 END WHERE consumerID=" + req.body.user + " and wineID=" + req.body.data + ";";
 		 db.run(queryString, function(err, row) {
 			 res.send("done");

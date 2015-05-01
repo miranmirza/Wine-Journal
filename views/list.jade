@@ -8,36 +8,36 @@ block content
     include modals/alert    
     include modals/winery
     if message
-      div(class="alert alert-success alert-dismissible" role="alert") #{message}
-        button(type="button" class="close" data-dismiss="alert" aria-label="Close")
+      div.alert.alert-success.alert-dismissible(role="alert") #{message}
+        button.close(type="button" data-dismiss="alert" aria-label="Close")
           span(aria-hidden="true") &times;   
         
-    nav(class="navbar navbar-default")
-      div(class="container-fluid")
-        div(class="navbar-header")
-          a(class="navbar-brand" href="#") #{title}
+    nav.navbar.navbar-default
+      div.container-fluid
+        div.navbar-header
+          a.navbar-brand
+            b #{title}
 
-          ul(class="nav navbar-nav")
+          ul.nav.navbar-nav
+            li 
+              a(href='/') Home
             li
-              button(href="/" class="btn btn-default navbar-btn") Home
-              
+              a(href='/favourites') Favourites
             li
-              form(method="post" action="/getFavourites")
-                button(type="submit" class="btn btn-default navbar-btn") Favourites 
-              //span(class="sr-only")(current)
-
-          div(id="searchbar")
-            form(class="navbar-form navbar-left" role="search" method="post", action="/search")
-              div(class="input-group")
-                input#query(type="text" name="input" class="form-control" value=result)
-                span(class="input-group-btn")
-                  button(class="btn btn-default" type="submit") 
-                    span(class="glyphicon glyphicon-search")
+              a(href='/logout') Logout
+                
+          div#searchbar
+            form.navbar-form.navbar-left(role="search" method="get", action="/search")
+              div.input-group
+                input.form-control#query(type="text" name="input" value=result)
+                span.input-group-btn
+                  button.btn.btn-default(type="submit") 
+                    span.glyphicon.glyphicon-search
 
     input#userID(type="hidden")=user                 
     div   
       div
-      table(class="table table-striped")
+      table.table.table-striped
         thead
           th Name
           th Type
@@ -53,12 +53,12 @@ block content
           - for (var item in items)
             tr
               td
-                a(data-toggle="modal" data-target="#myModal" id="#myButton" data-id= items[item].id) #{items[item].wineName}
+                a#myButton(data-toggle="modal" data-target="#myModal" data-id= items[item].id) #{items[item].wineName}
               td= items[item].type
               td= items[item].year
               td= items[item].alcoholContent + "%"
               td
-                a(data-toggle="modal" data-target="#wineryModal" id="#myButton2" data-id= items[item].wineryID) #{items[item].wineryName}
+                a#myButton2(data-toggle="modal" data-target="#wineryModal" data-id= items[item].wineryID) #{items[item].wineryName}
               td= items[item].country
               td= items[item].style
               td= items[item].varterial
