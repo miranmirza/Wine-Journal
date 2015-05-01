@@ -5,7 +5,7 @@ var parser = require('logic-query-parser');
 
 router.get('/', function(req, res) {
 	if(req.session.user)
-		res.redirect('/search?input=');
+		res.redirect('/results?input=');
 	else
 		res.render('index', { title: 'Wine Journal'});
 });
@@ -16,26 +16,26 @@ router.get('/logout', function(req, res) {
             console.log("Error: %s", err);
         }
         res.redirect("/");
-    }); 		
+    });
 });
 
 router.post('/login', function(req, res) {
 	var db = new sqlite3.Database('data/3005DB');
-	var sql = "SELECT * FROM consumers WHERE firstName like ? AND lastName like ?;"
+	var sql = "SELECT id FROM consumers WHERE firstName like ? AND lastName like ?;"
+
 	var statement = db.prepare(sql);
-	var userId = 0;
 	statement.get(req.body.input.split(" ", 2), function(err, row) {
 		req.session.user = row.id;
-		statement.finalize();
-		db.close();
+		res.redirect('/results?input=');
 	});
-	res.redirect('/search?input=');
+	statement.finalize();
+	db.close();
 });
 
 
-router.get('/search', function(req, res) {
+router.get('/results', function(req, res) {
 	var db = new sqlite3.Database('data/3005DB');
-	var sql = "SELECT * FROM wines NATURAL JOIN winery WHERE wineName like ? or type like ?;"// or id like ? or bookcode like ?;";
+	var sql = "SELECT * FROM wines NATURAL JOIN winery WHERE wineName like ? or type like ?;"
 	var options = [];
 	/*var binaryTree = parser.parse(req.body.input);
 	var queryRes = parser.utils.binaryTreeToQueryJson(binaryTree);
