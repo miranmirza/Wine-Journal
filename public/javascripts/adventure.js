@@ -1,17 +1,31 @@
 (function() {
 	var app = angular.module('myApp', []);
 	app.controller('WineController', function($scope, $http) {
-	    $http.get("/results2?input=")
-	    .success(function (response) {$scope.names = response;});
-	});
-	
-	app.controller('FavouritesController', function($scope, $http) {
-	    $http.get("/favourites")
-	    .success(function (response) {$scope.names = response;});
+		
+		this.search = function(query) {
+		    $http.get("/results2?input=" + query).success(function (response) {
+				$scope.names = response;
+			});
+		}
+		
+		this.favourites = function() {
+		    $http.get("/favourites").success(function (response) {
+				$scope.names = response;
+			});
+		}
+		
+		this.init = function() {
+			this.search("");
+		};
+		this.init();
 	});
 	
     app.controller('TabController', function(){
       this.tab = 1;
+	  
+	  this.getTab = function() {
+		  return this.tab;
+	  }
 	  
       this.setTab = function(newTab) {
         this.tab = newTab;

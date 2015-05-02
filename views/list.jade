@@ -1,0 +1,65 @@
+extends layout
+    
+block header
+  script(data-require='angular.js@*', data-semver='1.2.0-rc3-nonmin', src='http://code.angularjs.org/1.2.0-rc.3/angular.js')
+  script(data-require='ng-table@*', data-semver='0.3.0', src='http://bazalt-cms.com/assets/ng-table/0.3.0/ng-table.js')
+  script(src='/javascripts/adventure.js')
+        
+block content    
+    include modals/alert    
+    include modals/winery
+    if message
+      div.alert.alert-success.alert-dismissible(role="alert") #{message}
+        button.close(type="button" data-dismiss="alert" aria-label="Close")
+          span(aria-hidden="true") &times;
+      
+    body(ng-app='myApp')
+      div(ng-controller='WineController as wine')
+        section.tab(ng-controller = "TabController as tab")
+          nav.navbar.navbar-default
+            div.container-fluid
+              div.navbar-header
+                a.navbar-brand
+                  b #{title}
+                ul.nav.navbar-nav
+                  li(ng-class = " {active: tab.isSet(1) }")
+                    a(href ng-click ="tab.setTab(1); wine.init()") Home
+                  li(ng-class = " {active: tab.isSet(2) }")
+                    a(href ng-click ="tab.setTab(2); wine.favourites()") Favourites
+                  li
+                    a(href = '/logout') Logout
+                div#searchbar
+                  form.navbar-form.navbar-left(role="search" method="get", action="/results")
+                    div.input-group
+                      input.form-control#query(type="text" ng-model="input" name="input" placeholder = "Search" value=result)
+                      span.input-group-btn
+                        button.btn.btn-default(type="submit") 
+                          span.glyphicon.glyphicon-search      
+  
+        
+          table#wine.table.table-stripped(ng-table='usersTable')
+            thead
+              th Name
+              th Type
+              th Year
+              th Alcohol Content
+              th Winery
+              th Country
+              th Style
+              th Varterial
+              th Rating
+            tr(ng-repeat='x in names')
+              td(data-title='\'Name\'') 
+                a#myButton(data-toggle="modal" data-target="#myModal" data-id = "{{x.id}}") {{ x.wineName }}
+              td(data-title='\'Type\'') {{ x.type }}
+              td(data-title='\'Year\'') {{ x.year }}
+              td(data-title='\'Alcohol Content\'') {{ x.alcoholContent }}%
+              td(data-title='\'Winery\'') 
+                a#myButton2(data-toggle="modal" data-target="#wineryModal" data-id = "{{x.wineryID}}") {{ x.wineryName }}
+              td(data-title='\'Country\'') {{ x.country }}
+              td(data-title='\'Style\'') {{ x.style }}
+              td(data-title='\'Varterial\'') {{ x.varterial }}
+              td(data-title='\'Rating\'') {{ x.rating }}
+
+
+      
