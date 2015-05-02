@@ -15,8 +15,8 @@ DROP TABLE if exists starred;
 
 
 create table if not exists consumers(
-      id integer primary key not null, --auto increment key 
-      firstName text NOT NULL, --title of the customer
+    id integer primary key not null, --auto increment key 
+    firstName text NOT NULL, --title of the customer
 	  lastName text NOT NULL, --title of the customer
 	  dateOfBirth date NOT NULL, --date of birth of the customer
 	  address varchar(200),
@@ -24,31 +24,31 @@ create table if not exists consumers(
 );
 
 create table if not exists winery(
-      wineryID integer primary key not null, --auto increment key 
+    wineryID integer primary key not null, --auto increment key 
 	  wineryName text NOT NULL, -- name of the winery
 	  yearFounded int NOT NULL,
 	  location varchar(100)
 );
 
 create table if not exists wines(
-      id integer primary key not null, --auto increment key 
+    id integer primary key not null, --auto increment key 
 	  wineName text NOT NULL, -- name of the winery
 	  type text NOT NULL,
 	  year int NOT NULL,
 	  alcoholContent int NOT NULL,
 	  country text NOT NULL,
-      wineryID integer NOT NULL,
+    wineryID integer NOT NULL,
 	  style text,
 	  varterial text,--look into this again
 	  rating integer,
-      FOREIGN KEY(wineryID) REFERENCES winery(wineryID)
+    FOREIGN KEY(wineryID) REFERENCES winery(wineryID)
 );
 
 create table if not exists starred(
-    wineID integer NOT NULL,
-    consumerID integer NOT NULL,
+  wineID integer NOT NULL,
+  consumerID integer NOT NULL,
 	starred boolean not null,
-    PRIMARY KEY(wineID, consumerID),
+  PRIMARY KEY(wineID, consumerID),
 	FOREIGN KEY(wineID) REFERENCES wines(id),
 	FOREIGN KEY(consumerID) REFERENCES consumers(id)
 );

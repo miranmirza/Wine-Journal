@@ -1,5 +1,30 @@
-$(document).ready(function() {	
-	$('#myModal').on('show.bs.modal', function(dbEntry) {
+(function() {
+	var app = angular.module('myApp', []);
+	app.controller('WineController', function($scope, $http) {
+	    $http.get("/results2?input=")
+	    .success(function (response) {$scope.names = response;});
+	});
+	
+	app.controller('FavouritesController', function($scope, $http) {
+	    $http.get("/favourites")
+	    .success(function (response) {$scope.names = response;});
+	});
+	
+    app.controller('TabController', function(){
+      this.tab = 1;
+	  
+      this.setTab = function(newTab) {
+        this.tab = newTab;
+      };
+
+      this.isSet = function(value) {
+		 return this.tab === value;
+      };
+    });
+})();
+
+$(document).ready(function() {		
+	$('#myModal').on('show.bs.modal', function() {
 	    var getID = $(event.target).data('id');
 		
 		$.get("/wineFromID", {id: getID}, function(res) {
@@ -31,7 +56,7 @@ $(document).ready(function() {
 		
 	});
 	
-	$('#wineryModal').on('show.bs.modal', function(dbEntry) {
+	$('#wineryModal').on('show.bs.modal', function() {
 	    var getID = $(event.target).data('id');
 	    //make your ajax call populate items or what even you need
 		$.get("/wineryFromID", {id: getID}, function(res) {

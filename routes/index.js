@@ -62,6 +62,23 @@ router.get('/results', function(req, res) {
 });
 
 
+router.get('/results2', function(req, res) {
+	var db = new sqlite3.Database('data/3005DB');
+	var sql = "SELECT * FROM wines NATURAL JOIN winery WHERE wineName like ? or type like ?;"
+	var options = [];
+
+	for(var i = 0; i < 2; ++i) {
+		options.push("%" + req.query.input + "%");			
+	}
+
+	var statement = db.prepare(sql);
+	statement.all(options, function(err, row) {
+      	res.send(row);
+		statement.finalize();
+		db.close();
+	});
+});
+
 router.get('/wineFromID', function(req, res) {
 	var db = new sqlite3.Database('data/3005DB');
 	var sql = "SELECT * FROM wines WHERE id = ?;";
@@ -133,19 +150,18 @@ router.post('/updateWineryEntry', function(req, res) {
 	});
 });
 
+
 router.get('/favourites', function(req, res) {
 	var db = new sqlite3.Database('data/3005DB');
 	var queryString = "SELECT * from consumers JOIN starred ON consumers.id = starred.consumerID JOIN wines on starred.wineID=wines.id NATURAL JOIN winery WHERE starred=1 and consumerID=?;"
 	var statement = db.prepare(queryString);
 
 	statement.all(req.session.user, function(err, row) {
-      	 res.render('list', { 
-      		 title: 'Wine Listing', result: req.query.input, items: row});
+		res.send(row);
 		statement.finalize();
 		db.close();
 	});	
 });
-
 
 router.post('/starWine', function(req, res) {
 	var db = new sqlite3.Database('data/3005DB');
