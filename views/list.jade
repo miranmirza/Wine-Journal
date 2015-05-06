@@ -29,12 +29,12 @@ block content
                   li
                     a(href = '/logout') Logout
                 div#searchbar
-                  form.navbar-form.navbar-left(role="search" method="get", action="/results")
+                  form.navbar-form.navbar-left(role="search")
                     div.input-group
-                      input.form-control#query(type="text" ng-model="input" name="input" placeholder = "Search" value=result)
+                      input.form-control#query(type="text" name="input" ng-model="query" placeholder = "Search")
                       span.input-group-btn
-                        button.btn.btn-default(type="submit") 
-                          span.glyphicon.glyphicon-search      
+                        button.btn.btn-default(ng-click= "wine.search(query)")
+                          span.glyphicon.glyphicon-search
   
         
           table#wine.table.table-stripped(ng-table='usersTable')

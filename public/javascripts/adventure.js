@@ -1,7 +1,7 @@
 (function() {
 	var app = angular.module('myApp', []);
+	
 	app.controller('WineController', function($scope, $http) {
-		
 		this.search = function(query) {
 		    $http.get("/results2?input=" + query).success(function (response) {
 				$scope.names = response;
@@ -20,11 +20,15 @@
 		this.init();
 	});
 	
-    app.controller('TabController', function(){
+    app.controller('TabController', function($scope){
       this.tab = 1;
 	  
 	  this.getTab = function() {
 		  return this.tab;
+	  }
+
+	  $scope.printSearch = function() {
+		  $rootScope.printSearch("The search query is: " + $scope.query);
 	  }
 	  
       this.setTab = function(newTab) {
