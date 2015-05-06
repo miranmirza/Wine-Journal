@@ -31,7 +31,7 @@ block content
                 div#searchbar
                   form.navbar-form.navbar-left(role="search")
                     div.input-group
-                      input.form-control#query(type="text" name="input" ng-model="query" placeholder = "Search")
+                      input.form-control#query(type="text" name="input" ng-model="query" placeholder = "Search" ng-change= "wine.search(query)")
                       span.input-group-btn
                         button.btn.btn-default(ng-click= "wine.search(query)")
                           span.glyphicon.glyphicon-search
